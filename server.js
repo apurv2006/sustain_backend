@@ -2,10 +2,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+
+// Import Routes
 const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
 const orderRoutes = require("./routes/orderRoutes");
-// const connectDB = require("./config/db"); // Added database connection handling
+const trackingRoutes = require("./routes/trackingRoutes");
+const shipmentRoutes = require("./routes/shipmentRoutes");
+// const connectDB = require("./config/db"); // Database connection handling
 
 dotenv.config();
 
@@ -22,6 +26,8 @@ app.use(bodyParser.json());
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/tracking", trackingRoutes);
+app.use("/api/shipments", shipmentRoutes);
 
 // Handle 404 for invalid routes
 app.use((req, res) => {
