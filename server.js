@@ -9,6 +9,7 @@ const userRoutes = require("./routes/userRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const trackingRoutes = require("./routes/trackingRoutes");
 const shipmentRoutes = require("./routes/shipmentRoutes");
+const profileRoutes = require("./routes/profile");
 // const connectDB = require("./config/db"); // Database connection handling
 
 dotenv.config();
@@ -28,7 +29,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/tracking", trackingRoutes);
 app.use("/api/shipments", shipmentRoutes);
-
+app.use(express.json());
+app.use("/api", profileRoutes);
 // Handle 404 for invalid routes
 app.use((req, res) => {
     res.status(404).json({
