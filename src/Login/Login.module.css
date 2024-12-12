@@ -1,0 +1,65 @@
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("background.jpg"); /* Replace with the actual image path */
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+}
+
+.loginBox {
+    background-color: rgba(0, 0, 0, 0.7); /* Slightly darker background for better contrast */
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    width: 300px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px; /* Space below the logo */
+}
+
+.inputField {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255); /* Light background for input fields */
+    color: rgb(0, 0, 0); /* Text color */
+}
+
+.inputField::placeholder {
+    color: rgba(0, 0, 0, 0.7); /* Placeholder text color */
+}
+
+.submitButton {
+    background-color: #004d00; /* Dark green background */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.submitButton:hover {
+    background-color: #005700; /* Slightly lighter green on hover */
+}
+
+.registerLink {
+    color: white;
+    display: block;
+    margin-top: 10px;
+    text-decoration: none; /* Remove underline */
+}
+
+.registerLink:hover {
+    text-decoration: underline; /* Underline on hover for emphasis */
+}
