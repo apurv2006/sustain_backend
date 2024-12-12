@@ -43,6 +43,7 @@ const productPageStyle: React.CSSProperties = {
     fontFamily: 'Arial, sans-serif',
     padding: '20px',
     backgroundColor: '#f4f4f4',
+    minWidth: '95vw',
     minHeight: '100vh'
 };
 

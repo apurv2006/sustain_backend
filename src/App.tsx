@@ -10,10 +10,10 @@ import ProductList from './ListProduct/ProductList.tsx'
 import ForBusiness from './ForBusiness/ForBusiness.tsx';
 import ForCustomer from './ForCustomer/ForCustomer.tsx';
 import MyProfile from './MyProfile/MyProfile.tsx';
-import Cart from './Sidebar/Cart.tsx';
+import Cart from './Cart/Cart.tsx';
 import FindSeller from './FindSeller/FindSeller.tsx';
 import TrackOrders from './TrackOrders/TrackOrders.tsx';
-import Chatroom from './Sidebar/Chatroom.tsx';
+import Chatroom from './Chatroom/Chatroom.tsx';
 import ProductPage from './ProductPages/SteelBottle.tsx'
 import BambooToothbrush from './ProductPages/BambooToothbrush.tsx';
 

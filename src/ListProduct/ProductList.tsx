@@ -1,12 +1,13 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import styles from "./ProductList.module.css";
 
 interface Product {
   product_id: number;
-  business_id: number;
+  business_id?: number; // Optional
   name: string;
   description: string;
   price: number;
-  eco_credit_cost: number;
+  eco_credit_cost?: number; // Optional, if needed in the future
   stock_quantity: number;
   image_url: string;
   created_at: string;
@@ -14,12 +15,19 @@ interface Product {
 }
 
 const ProductList: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]); // Original data
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // Data to display
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>(""); // State for search bar input
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [newProduct, setNewProduct] = useState<Omit<Product, "product_id" | "created_at" | "updated_at">>({
+    name: "",
+    description: "",
+    price: 0,
+    stock_quantity: 0,
+    image_url: "",
+    business_id: undefined,
+  });
 
-  // Fetch all products from the backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -29,17 +37,16 @@ const ProductList: React.FC = () => {
         }
         const data: Product[] = await response.json();
         setProducts(data);
-        setFilteredProducts(data); // Initialize the displayed products
+        setFilteredProducts(data);
       } catch (err) {
         console.error("Error fetching products:", err);
-        setError("Failed to load products.");
+        // setError("Failed to fetch products. Please try again later.");
       }
     };
 
     fetchProducts();
   }, []);
 
-  // Handle real-time search input changes
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
@@ -53,33 +60,121 @@ const ProductList: React.FC = () => {
     setFilteredProducts(filtered);
   };
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setNewProduct((prev) => ({
+      ...prev,
+      [name]: name === "price" || name === "stock_quantity" ? Number(value) : value,
+    }));
+  };
+
+  const handleAddProduct = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (!newProduct.name || !newProduct.description || !newProduct.price || !newProduct.stock_quantity || !newProduct.image_url) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    const product: Product = {
+      ...newProduct,
+      product_id: products.length + 1,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
+    setProducts((prev) => [...prev, product]);
+    setFilteredProducts((prev) => [...prev, product]);
+    setNewProduct({
+      name: "",
+      description: "",
+      price: 0,
+      stock_quantity: 0,
+      image_url: "",
+      business_id: undefined,
+    });
+  };
 
   return (
-    <div>
-      {/* Search Bar Section */}
-      <div style={{ marginBottom: "20px" }}>
+    <div className={styles.container}>
+      {error && <div className={styles.error}>Error: {error}</div>}
+
+      {/* Add Product Form */}
+      <div className={styles.formContainer}>
+        <h2>Add a New Product</h2>
+        <form onSubmit={handleAddProduct} className={styles.form}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Product Name *"
+            value={newProduct.name}
+            onChange={handleInputChange}
+            className={styles.input}
+            required
+          />
+          <textarea
+            name="description"
+            placeholder="Description *"
+            value={newProduct.description}
+            onChange={handleInputChange}
+            className={styles.input}
+            required
+          />
+          <input
+            type="number"
+            name="price"
+            placeholder="Price *"
+            value={newProduct.price || ""}
+            onChange={handleInputChange}
+            className={styles.input}
+            required
+          />
+          <input
+            type="number"
+            name="stock_quantity"
+            placeholder="Stock Quantity *"
+            value={newProduct.stock_quantity || ""}
+            onChange={handleInputChange}
+            className={styles.input}
+            required
+          />
+          <input
+            type="text"
+            name="image_url"
+            placeholder="Image URL *"
+            value={newProduct.image_url}
+            onChange={handleInputChange}
+            className={styles.input}
+            required
+          />
+          <input
+            type="number"
+            name="business_id"
+            placeholder="Business ID (optional)"
+            value={newProduct.business_id || ""}
+            onChange={handleInputChange}
+            className={styles.input}
+          />
+          <button type="submit" className={styles.button}>
+            Add Product
+          </button>
+        </form>
+      </div>
+
+      {/* Search Bar
+      <div className={styles.searchBar}>
         <input
           type="text"
           placeholder="Search by name or description..."
           value={searchQuery}
           onChange={handleSearch}
-          style={{
-            padding: "10px",
-            width: "100%",
-            maxWidth: "600px",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-          }}
+          className={styles.input}
         />
       </div>
 
-      {/* Product List Section */}
-      <h1>Product List</h1>
+      <h1 className={styles.heading}>Product List</h1>
       {filteredProducts.length > 0 ? (
-        <table border="1" cellPadding="8" style={{ width: "100%", borderCollapse: "collapse" }}>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th>Product ID</th>
@@ -87,7 +182,6 @@ const ProductList: React.FC = () => {
               <th>Name</th>
               <th>Description</th>
               <th>Price</th>
-              <th>Eco Credit Cost</th>
               <th>Stock Quantity</th>
               <th>Image URL</th>
               <th>Created At</th>
@@ -98,11 +192,10 @@ const ProductList: React.FC = () => {
             {filteredProducts.map((product) => (
               <tr key={product.product_id}>
                 <td>{product.product_id}</td>
-                <td>{product.business_id}</td>
+                <td>{product.business_id || "N/A"}</td>
                 <td>{product.name}</td>
                 <td>{product.description}</td>
                 <td>{product.price}</td>
-                <td>{product.eco_credit_cost}</td>
                 <td>{product.stock_quantity}</td>
                 <td>
                   <a href={product.image_url} target="_blank" rel="noopener noreferrer">
@@ -116,8 +209,8 @@ const ProductList: React.FC = () => {
           </tbody>
         </table>
       ) : (
-        <p>No products match your search query or are available.</p>
-      )}
+        <p className={styles.noProducts}>No products match your search query or are available.</p>
+      )} */}
     </div>
   );
 };
