@@ -4,7 +4,7 @@ const mysql = require("mysql2");
 const db = mysql.createConnection({
   host: process.env.DB_HOST || "localhost",
   user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "Aaavj@1981",
+  password: process.env.DB_PASSWORD || "811Jaden2005!",
   database: process.env.DB_NAME || "ecommerce",
   port: 3306, // Default MySQL port
 });
