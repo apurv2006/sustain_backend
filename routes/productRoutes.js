@@ -7,6 +7,6 @@ const router = express.Router();
 router.get("/", getAllProducts);
 
 // Route for adding a new product
-router.post("/add", addProduct);
+router.post("/add-product", addProduct);
 
 module.exports = router;
