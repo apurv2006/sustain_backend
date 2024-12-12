@@ -49,7 +49,7 @@ const AboutUs = () => (
             </p>
           </div>
           <div className={styles.featureCard}>
-            <h3 className= {styles.featureTitle}>📈 Data-Driven Insights</h3>
+            <h3 className= {styles.featureCard}>📈 Data-Driven Insights</h3>
             <p className={styles.text}>
               Our platform provides actionable insights for informed
               decision-making.
@@ -59,7 +59,7 @@ const AboutUs = () => (
       </section>
 
       {/* Vision Section */}
-      <section className={styles.visionSection}>
+      <section className="vision-section">
         <h2 className=  {styles.sectionTitle}>Our Vision</h2>
         <p className={styles.text}>
           At SustainaLink, we envision a world where businesses thrive while

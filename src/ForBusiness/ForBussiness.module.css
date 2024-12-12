@@ -2,12 +2,19 @@
 
 .homepageContainer {
     font-family: Arial, sans-serif;
+    background-color: #e0e0e0;
+    min-width: 100vw;
+    min-height: auto;
   }
   
   .heroSection {
     text-align: center;
     padding: 50px 20px;
     background-color: #f2f2f2;
+  }
+
+  .heroSection h1{
+    color:#0f0f0f;
   }
   
   .heroSection h3 {
@@ -43,7 +50,7 @@
     width: 200px;
     height: 200px;
     margin: 10px;
-    background-color: #e0e0e0;
+    background-color: #0f0f0f;
     display: flex;
     flex-direction: column;
     justify-content: center;
